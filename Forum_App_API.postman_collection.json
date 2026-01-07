@@ -1,0 +1,340 @@
+{
+  "info": {
+    "name": "Forum App API",
+    "description": "Complete API collection for Forum App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/logout"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/forgot-password",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Direct Reset (No Email)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/reset-direct",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"oldPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Topics",
+      "item": [
+        {
+          "name": "Get All Topics",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/topics?page=1&limit=20"
+          }
+        },
+        {
+          "name": "Get Topic by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/topics/TOPIC_ID_HERE"
+          }
+        },
+        {
+          "name": "Create Topic",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/topics",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"How to build a React Native app?\",\n  \"content\": \"I want to learn how to build a mobile app using React Native. Can anyone share some resources or tips for beginners?\",\n  \"tags\": [\"react-native\", \"mobile\", \"beginner\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Topic",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/topics/TOPIC_ID_HERE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated: How to build a React Native app?\",\n  \"content\": \"Updated content here...\",\n  \"tags\": [\"react-native\", \"updated\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Topic",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/topics/TOPIC_ID_HERE"
+          }
+        },
+        {
+          "name": "Get Topic Replies",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/topics/TOPIC_ID_HERE/replies?page=1&limit=20"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Replies",
+      "item": [
+        {
+          "name": "Create Reply",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/replies",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Great question! I recommend starting with the official React Native documentation.\",\n  \"topicId\": \"TOPIC_ID_HERE\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Reply",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/replies/REPLY_ID_HERE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Updated reply content here...\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Reply",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/replies/REPLY_ID_HERE"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/me"
+          }
+        },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/users/me",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newusername\",\n  \"bio\": \"I am a software developer passionate about React Native!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/USER_ID_HERE"
+          }
+        },
+        {
+          "name": "Get User Topics",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/USER_ID_HERE/topics?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Get User Replies",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/users/USER_ID_HERE/replies?page=1&limit=10"
+          }
+        }
+      ]
+    }
+  ]
+}
